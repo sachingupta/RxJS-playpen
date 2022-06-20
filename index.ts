@@ -6,7 +6,7 @@ import {
   ObservableCreationFromEvent,
   ObservableCreationOf,
 } from './creations';
-import { ThrottleExample } from './operators';
+import { ThrottleExample, OperatorsExample } from './operators';
 
 function executer(id: number) {
   switch (id) {
@@ -18,9 +18,11 @@ function executer(id: number) {
       ObservableCreationOf();
     case 4:
       ThrottleExample();
+    case 100:
+      OperatorsExample();
   }
 }
 
-executer(14);
+executer(100);
 
 // Open the console in the bottom right to see results.

@@ -1,4 +1,11 @@
-import { fromEvent, throttleTime, scan } from 'rxjs';
+import {
+  fromEvent,
+  throttleTime,
+  scan,
+  Observable,
+  interval,
+  take,
+} from 'rxjs';
 
 // 3 This is how you would allow at most one click per second, with plain JavaScript:
 /**
@@ -15,6 +22,10 @@ document.addEventListener('click', () => {
 
  */
 
+export function OperatorsExample() {
+  TakeExmplae();
+}
+
 export function ThrottleExample() {
   fromEvent(document, 'click')
     .pipe(
@@ -22,4 +33,12 @@ export function ThrottleExample() {
       scan((count) => count + 1, 0)
     )
     .subscribe((count) => console.log(`Clicked ${count} times`));
+}
+
+export function TakeExmplae() {
+  const numbers$ = interval(1000);
+
+  const takeFourNumbers$ = numbers$.pipe(take(4));
+
+  takeFourNumbers$.subscribe((x) => console.log('Next: ', x));
 }
