@@ -29,6 +29,7 @@ foo.subscribe(y => {
 **What is an Observer?**
 
 - An Observer is a consumer of values delivered by an Observable. Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: next, error, and complete. The following is an example of a typical Observer object:
+- Each subsciption create a new instance of observer.
 
 - ```Javascript
   const observer = {
@@ -60,3 +61,82 @@ subscription.unsubscribe();
 }, 1000);
 
 ```
+
+**Subject**
+
+```Javascript
+
+mySubject$;
+  ngOnInit() {
+    this.mySubject$ = new Subject();
+    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
+    this.mySubject$.next(1);
+    this.mySubject$.next(2);
+
+    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
+    this.mySubject$.next(3);
+
+    this.mySubject$.complete();
+    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
+    this.mySubject$.next(4);
+
+  }
+
+  ngOnDestroy() {
+    this.mySubject$.unsubscribe();
+  }
+
+```
+
+**BehaviourSubject**
+
+- same as subject just required a value.
+- it will start with last value, hold most recent value for any new subscriber.
+
+```Javascript
+mySubject$;
+  ngOnInit() {
+    this.mySubject$ = new BehaviorSubject(0);
+    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
+    this.mySubject$.next(1);
+    this.mySubject$.next(2);
+
+    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
+    this.mySubject$.next(3);
+
+    this.mySubject$.complete();
+    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
+    this.mySubject$.next(4);
+  }
+
+  ngOnDestroy() {
+    this.mySubject$.unsubscribe();
+  }
+```
+
+**ReplaySubject**
+
+- all subscriber get all values
+
+```Javascript
+mySubject$;
+  ngOnInit() {
+    this.mySubject$ = new ReplaySubject();
+    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
+    this.mySubject$.next(1);
+    this.mySubject$.next(2);
+
+    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
+    this.mySubject$.next(3);
+
+    this.mySubject$.complete();
+    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
+    this.mySubject$.next(4);
+  }
+
+  ngOnDestroy() {
+    this.mySubject$.unsubscribe();
+  }
+```
+
+## Operator
