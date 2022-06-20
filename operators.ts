@@ -5,8 +5,9 @@ import {
   Observable,
   interval,
   take,
+  of,
 } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 
 // 3 This is how you would allow at most one click per second, with plain JavaScript:
 /**
@@ -24,7 +25,7 @@ document.addEventListener('click', () => {
  */
 
 export function OperatorsExample() {
-  filterExample();
+  SwitchMapExample();
 }
 
 export function ThrottleExample() {
@@ -66,4 +67,34 @@ export function filterExample() {
   );
 
   takeFourNumbers$.subscribe((x) => console.log('filter: ', x));
+}
+
+export function MergeMapExample() {
+  const numbers$ = interval(1000);
+  const letters$ = of('a', 'b', 'c', 'd', 'e');
+  const mergedNumberLetters$ = letters$.pipe(
+    mergeMap((x) =>
+      numbers$.pipe(
+        take(5),
+        map((i) => i + x)
+      )
+    )
+  );
+
+  mergedNumberLetters$.subscribe((x) => console.log('margeMap: ' + x));
+}
+
+export function SwitchMapExample() {
+  const numbers$ = interval(1000);
+  const letters$ = of('a', 'b', 'c', 'd', 'e');
+  const mergedNumberLetters$ = letters$.pipe(
+    switchMap((x) =>
+      numbers$.pipe(
+        take(5),
+        map((i) => i + x)
+      )
+    )
+  );
+
+  mergedNumberLetters$.subscribe((x) => console.log('switchMap: ' + x));
 }
