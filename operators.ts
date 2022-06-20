@@ -6,6 +6,7 @@ import {
   interval,
   take,
 } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 // 3 This is how you would allow at most one click per second, with plain JavaScript:
 /**
@@ -23,7 +24,7 @@ document.addEventListener('click', () => {
  */
 
 export function OperatorsExample() {
-  TakeExmplae();
+  filterExample();
 }
 
 export function ThrottleExample() {
@@ -41,4 +42,28 @@ export function TakeExmplae() {
   const takeFourNumbers$ = numbers$.pipe(take(4));
 
   takeFourNumbers$.subscribe((x) => console.log('Next: ', x));
+}
+
+export function MapExample() {
+  const numbers$ = interval(1000);
+
+  const takeFourNumbers$ = numbers$.pipe(
+    take(4),
+    map((x) => x * 10)
+  );
+
+  takeFourNumbers$.subscribe((x) => console.log('map: ', x));
+}
+
+export function filterExample() {
+  const numbers$ = interval(1000);
+
+  const takeFourNumbers$ = numbers$.pipe(
+    take(15),
+    filter((x) => x % 2 == 0),
+    map((x) => x * 10),
+    filter((x) => x > 20)
+  );
+
+  takeFourNumbers$.subscribe((x) => console.log('filter: ', x));
 }
