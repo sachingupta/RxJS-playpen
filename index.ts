@@ -7,6 +7,8 @@ import {
   ObservableCreationOf,
 } from './creations';
 import { ThrottleExample, OperatorsExample } from './operators';
+import { stopWatch } from './examples/stopwatch/stopwatch';
+import { dragDrop } from './examples/dragdrop';
 
 function executer(id: number) {
   switch (id) {
@@ -20,9 +22,13 @@ function executer(id: number) {
       ThrottleExample();
     case 100:
       OperatorsExample();
+    case 200:
+      stopWatch();
+    case 201:
+      dragDrop();
   }
 }
 
-executer(100);
+executer(201);
 
 // Open the console in the bottom right to see results.

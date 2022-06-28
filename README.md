@@ -30,20 +30,32 @@
 - You execute an observable by subscribing to it. Observables model a stream of events.
 - Observables are like functions with zero arguments, but generalize those to allow multiple values.
 - Observables are able to deliver values either synchronously or asynchronously.
+- One thing to note here is that observables under RxJS are lazy
 
 ```Javascript
 import { Observable } from 'rxjs';
 
-const foo = new Observable(subscriber => {
+const foo$ = new Observable(subscriber => {
   console.log('Hello');
   subscriber.next(42);
 });
 
-foo.subscribe(x => {
+foo$.subscribe(x => {
   console.log(x);
 });
-foo.subscribe(y => {
+foo$.subscribe(y => {
   console.log(y);
+});
+```
+
+```Javascript
+import { fromEvent } from 'rxjs';
+
+let button = document.querySelector('#increase');
+var clicks$ = fromEvent(button, 'click');
+
+clicks$.subscribe(e => {
+  console.log('button clicked');
 });
 ```
 
@@ -73,8 +85,8 @@ foo.subscribe(y => {
 
 ```Javascript
   import { interval } from 'rxjs';
-const observable1 = interval(400);
-const observable2 = interval(300);
+const observable1$ = interval(400);
+const observable2$ = interval(300);
 
 const subscription = observable1.subscribe(x => console.log('first: ' + x));
 const childSubscription = observable2.subscribe(x => console.log('second: ' + x));
@@ -170,6 +182,10 @@ mySubject$;
 #### **Operator**
 
 - An operator is a function that allows us to perform certain actions on events executed by observables.
+- You can import operators from 'rxjs/operators'. To use an operator, pass it into the .pipe method of an observable.
+- interval(100), creates an observable that emits sequential numbers every specified interval (milliseconds by default) of time, starting from 0.
+- takeUntil : is an operator that attaches itself to an observable stream and takes values from that stream until the observable that’s passed in as an argument emits a value.
+- The of constructor allows for the easy creation of an observable out of a known data source. It takes any number of arguments and returns an observable containing each argument as a separate event.
 
 ```Javascript
 export function ThrottleExample() {
