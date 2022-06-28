@@ -1,4 +1,4 @@
-# rxjs-edwhye
+# rxjs-Playpen
 
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/rxjs-edwhye)
 
@@ -6,11 +6,24 @@
 
 [Async Patterns in JS](./async_programming_evolution_in_JS.md)
 
-**Observable**
+## RxJS
 
+- Reactive Extensions for JavaScript, or [RxJS](https://rxjs.dev/guide/overview), is a JavaScript library that uses observables for reactive programming.
+- It can be used with other JavaScript libraries and frameworks, and it integrates well into Angular
+- RxJS, is a reactive library used to implement reactive programming to deal with async implementation, callbacks, and event-based programs.
+- It can be used in your browser or with Node.js.
+- The RxJS library is great for handling async tasks. It has a large collection of operators in filtering, error handling, conditional, creation, multicasting, and more. 
+- It is supported by JavaScript and TypeScript, and it works well with Angular.
+
+### RxJS has some core features that help handle async implementation:
+
+#### **Observable**
+
+- RxJS observables allow you to publish events.
+- Observables have two methods: subscribe and unsubscribe.
+- You execute an observable by subscribing to it. Observables model a stream of events.
 - Observables are like functions with zero arguments, but generalize those to allow multiple values.
 - Observables are able to deliver values either synchronously or asynchronously.
--
 
 ```Javascript
 import { Observable } from 'rxjs';
@@ -30,24 +43,27 @@ foo.subscribe(y => {
 
 - Subscribing to an Observable is like calling a function, providing callbacks where the data will be delivered to.
 
-**What is an Observer?**
+#### **Observer**
 
-- An Observer is a consumer of values delivered by an Observable. Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: next, error, and complete. The following is an example of a typical Observer object:
+- An Observer is a consumer of values delivered by an Observable.
+- Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: next, error, and complete.
+- They are the objects that subscribe to observables.
 - Each subsciption create a new instance of observer.
+- The following is an example of a typical Observer object
 
-- ```Javascript
+```Javascript
   const observer = {
     next: x => console.log('Observer got a next value: ' + x),
     error: err => console.error('Observer got an error: ' + err),
     complete: () => console.log('Observer got a complete notification'),
   };
-  ```
+```
 
-**Subscription**
+#### **Subscription**
 
+- A subscription to the observable will trigger the observable to execute.
 - A Subscription is an object that represents a disposable resource, usually the execution of an Observable. A Subscription has one important method, unsubscribe, that takes no argument and just disposes the resource held by the subscription. In previous versions of RxJS, Subscription was called "Disposable".
 - A Subscription essentially just has an unsubscribe() function to release resources or cancel Observable executions.
--
 
 ```Javascript
   import { interval } from 'rxjs';
@@ -66,7 +82,9 @@ subscription.unsubscribe();
 
 ```
 
-**Subject**
+#### **Subject**
+
+- A subject is the same as an EventEmitter. It is an observable that multicasts information to observers.
 
 ```Javascript
 
@@ -143,7 +161,9 @@ mySubject$;
   }
 ```
 
-## Operator
+#### **Operator**
+
+- An operator is a function that allows us to perform certain actions on events executed by observables.
 
 ```Javascript
 export function ThrottleExample() {
@@ -187,3 +207,33 @@ export function filterExample() {
   takeFourNumbers$.subscribe((x) => console.log('filter: ', x));
 }
 ```
+
+#### Scheduler
+
+- A scheduler handles the execution of subscriptions.
+
+
+### Pros and cons of RxJS
+#### Pros
+- RxJS is a powerful and popular tool that continues to grow. It has over 2 million dependent repositories on GitHub and over 22 million weekly downloads from NPM. Let’s take a look at some of the reasons why it is so popular:
+
+- **Flexibility**: It can be used with other JavaScript libraries and frameworks.
+
+- **Great API**: With RxJS, you’re able to simplify your workflow with asynchronous dataflows and save time.
+
+- **Optimized**: Many developers have tested and improved it.
+
+- **Extensibility**: It is designed to allow new functionalities.
+
+- **Self-sufficient**: RxJS doesn’t have any third-party dependencies.
+
+- **Helpful community**: Members of the RxJS community help each other solve problems and answer questions.
+
+#### Cons
+- Like any other tool, RxJS has a few downsides. Let’s take a look at them:
+
+- **Debugging**: Debugging code with observables isn’t always simple.
+
+- **Data immutability**: Reactive programming works the best when combined with functional programming.
+
+- **tslib dependency**: The only dependency RxJS has is tslib. Details of internal implementation are not always restricted, meaning that you can see some improper usage of access modifiers.
