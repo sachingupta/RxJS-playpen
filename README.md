@@ -35,15 +35,16 @@
 ```Javascript
 import { Observable } from 'rxjs';
 
-const foo$ = new Observable(subscriber => {
+const observable$ = new Observable(subscriber => {
   console.log('Hello');
   subscriber.next(42);
 });
 
-foo$.subscribe(x => {
+observable$.subscribe(x => {
   console.log(x);
 });
-foo$.subscribe(y => {
+
+observable$.subscribe(y => {
   console.log(y);
 });
 ```
@@ -64,7 +65,7 @@ clicks$.subscribe(e => {
 #### **Observer**
 
 - An Observer is a consumer of values delivered by an Observable.
-- Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: next, error, and complete.
+- Observers are just objects with three callbacks, one for each type of notification that an Observable may deliver: next, error, and complete.
 - They are the objects that subscribe to observables.
 - Each subsciption create a new instance of observer.
 - The following is an example of a typical Observer object
@@ -75,13 +76,28 @@ clicks$.subscribe(e => {
     error: err => console.error('Observer got an error: ' + err),
     complete: () => console.log('Observer got a complete notification'),
   };
+
+observable$(observer)
 ```
 
 #### **Subscription**
 
+- A Subscription is an object that represents a disposable resource, usually the execution of an Observable. A
+- Subscription has one important method, unsubscribe, that takes no argument and just disposes the resource held by the subscription.
 - A subscription to the observable will trigger the observable to execute.
-- A Subscription is an object that represents a disposable resource, usually the execution of an Observable. A Subscription has one important method, unsubscribe, that takes no argument and just disposes the resource held by the subscription. In previous versions of RxJS, Subscription was called "Disposable".
 - A Subscription essentially just has an unsubscribe() function to release resources or cancel Observable executions.
+
+```Javascript
+import { interval } from 'rxjs';
+
+const observable$ = interval(1000);
+const subscription = observable$.subscribe(x => console.log(x));
+
+subscription.unsubscribe();
+
+```
+
+- Subscriptions can also be put together, so that a call to an unsubscribe() of one Subscription may unsubscribe multiple Subscriptions. You can do this by "adding" one subscription into another:
 
 ```Javascript
   import { interval } from 'rxjs';
@@ -101,6 +117,8 @@ subscription.unsubscribe();
 ```
 
 #### **Subject**
+
+https://rxjs.dev/guide/subject
 
 - A subject is the same as an EventEmitter. It is an observable that multicasts information to observers.
 
