@@ -8,17 +8,23 @@
 
 ## RxJS
 
+|            |   Sync   |      Async |
+| ---------- | :------: | ---------: |
+| Single     | Variable |    Promise |
+| Collection |  Array   | Observable |
+
 - Reactive Extensions for JavaScript, or [RxJS](https://rxjs.dev/guide/overview), is a JavaScript library that uses observables for reactive programming.
 - It can be used with other JavaScript libraries and frameworks, and it integrates well into Angular
 - RxJS, is a reactive library used to implement reactive programming to deal with async implementation, callbacks, and event-based programs.
 - It can be used in your browser or with Node.js.
-- The RxJS library is great for handling async tasks. It has a large collection of operators in filtering, error handling, conditional, creation, multicasting, and more. 
+- The RxJS library is great for handling async tasks. It has a large collection of operators in filtering, error handling, conditional, creation, multicasting, and more.
 - It is supported by JavaScript and TypeScript, and it works well with Angular.
 
 ### RxJS has some core features that help handle async implementation:
 
 #### **Observable**
 
+- Observables are like arrays because they represent a collection of events but are also like promises as they’re asynchronous: each event in the collection arrives at some indeterminate point in the future.
 - RxJS observables allow you to publish events.
 - Observables have two methods: subscribe and unsubscribe.
 - You execute an observable by subscribing to it. Observables model a stream of events.
@@ -212,9 +218,10 @@ export function filterExample() {
 
 - A scheduler handles the execution of subscriptions.
 
-
 ### Pros and cons of RxJS
+
 #### Pros
+
 - RxJS is a powerful and popular tool that continues to grow. It has over 2 million dependent repositories on GitHub and over 22 million weekly downloads from NPM. Let’s take a look at some of the reasons why it is so popular:
 
 - **Flexibility**: It can be used with other JavaScript libraries and frameworks.
@@ -230,6 +237,7 @@ export function filterExample() {
 - **Helpful community**: Members of the RxJS community help each other solve problems and answer questions.
 
 #### Cons
+
 - Like any other tool, RxJS has a few downsides. Let’s take a look at them:
 
 - **Debugging**: Debugging code with observables isn’t always simple.
