@@ -1,4 +1,12 @@
-import { fromEvent, map, Observable, of } from 'rxjs';
+import {
+  fromEvent,
+  ReplaySubject,
+  map,
+  Observable,
+  of,
+  Subject,
+  BehaviorSubject,
+} from 'rxjs';
 
 export function ObservableCreation() {
   // 1. creating an observable and observer using subscribe
@@ -42,4 +50,23 @@ export function ObservableCreationOf() {
   of('World')
     .pipe(map((name) => `Hello, ${name}!`))
     .subscribe(console.log);
+}
+
+export function subjectExample() {
+  const subject = new BehaviorSubject(0);
+
+  subject.subscribe({
+    next: (v) => console.log(`observerA: ${v}`),
+  });
+
+  subject.next(1);
+  subject.next(2);
+  subject.next(3);
+  subject.next(4);
+
+  subject.subscribe({
+    next: (v) => console.log(`observerB: ${v}`),
+  });
+
+  subject.next(5);
 }

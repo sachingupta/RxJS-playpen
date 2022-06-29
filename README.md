@@ -138,28 +138,36 @@ subscription.unsubscribe();
 https://rxjs.dev/guide/subject
 
 - A subject is the same as an EventEmitter. It is an observable that multicasts information to observers.
+- subjet can work as observable as well as observer.
 
 ```Javascript
 
-mySubject$;
-  ngOnInit() {
-    this.mySubject$ = new Subject();
-    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
-    this.mySubject$.next(1);
-    this.mySubject$.next(2);
+import { Subject } from 'rxjs';
 
-    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
-    this.mySubject$.next(3);
+const subject = new Subject(); // buffer 3 values for new subscribers
 
-    this.mySubject$.complete();
-    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
-    this.mySubject$.next(4);
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`),
+});
 
-  }
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
 
-  ngOnDestroy() {
-    this.mySubject$.unsubscribe();
-  }
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`),
+});
+
+subject.next(5);
+
+// Logs:
+// observerA: 1
+// observerA: 2
+// observerA: 3
+// observerA: 4
+// observerA: 5
+// observerB: 5
 
 ```
 
@@ -169,49 +177,115 @@ mySubject$;
 - it will start with last value, hold most recent value for any new subscriber.
 
 ```Javascript
-mySubject$;
-  ngOnInit() {
-    this.mySubject$ = new BehaviorSubject(0);
-    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
-    this.mySubject$.next(1);
-    this.mySubject$.next(2);
+import { BehaviorSubject } from 'rxjs';
+const subject = new BehaviorSubject(0);
 
-    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
-    this.mySubject$.next(3);
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`),
+});
 
-    this.mySubject$.complete();
-    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
-    this.mySubject$.next(4);
-  }
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
 
-  ngOnDestroy() {
-    this.mySubject$.unsubscribe();
-  }
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`),
+});
+
+subject.next(5);
+
+// Logs
+// observerA: 0
+// observerA: 1
+// observerA: 2
+// observerA: 3
+// observerA: 4
+// observerB: 4
+// observerA: 5
+// observerB: 5
 ```
 
 **ReplaySubject**
 
-- all subscriber get all values
+- all subscriber get atleast last n values all values
+- A ReplaySubject records multiple values from the Observable execution and replays them to new subscribers.
 
 ```Javascript
-mySubject$;
-  ngOnInit() {
-    this.mySubject$ = new ReplaySubject();
-    this.mySubject$.subscribe((x) => console.log('first subscribe', x));
-    this.mySubject$.next(1);
-    this.mySubject$.next(2);
+import { ReplaySubject } from 'rxjs';
+const subject = new ReplaySubject(3); // buffer 3 values for new subscribers
 
-    this.mySubject$.subscribe((x) => console.log('second subscribe', x));
-    this.mySubject$.next(3);
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`),
+});
 
-    this.mySubject$.complete();
-    this.mySubject$.subscribe((x) => console.log('third subscribe', x));
-    this.mySubject$.next(4);
-  }
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
 
-  ngOnDestroy() {
-    this.mySubject$.unsubscribe();
-  }
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`),
+});
+
+subject.next(5);
+
+// Logs:
+// observerA: 1
+// observerA: 2
+// observerA: 3
+// observerA: 4
+// observerB: 2
+// observerB: 3
+// observerB: 4
+// observerA: 5
+// observerB: 5
+```
+
+**AsyncSubject**
+
+- The AsyncSubject is a variant where only the last value of the Observable execution is sent to its observers, and only when the execution completes.
+
+```Javascript
+import { AsyncSubject } from 'rxjs';
+const subject = new AsyncSubject();
+
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`),
+});
+
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
+
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`),
+});
+
+subject.next(5);
+subject.complete();
+
+// Logs:
+// observerA: 5
+// observerB: 5
+```
+
+**Void subject**
+
+- Sometimes the emitted value doesn't matter as much as the fact that a value was emitted.
+
+```Javascript
+import { Subject } from 'rxjs';
+
+const subject = new Subject(); // Shorthand for Subject<void>
+
+subject.subscribe({
+  next: () => console.log('One second has passed'),
+});
+
+setTimeout(() => subject.next(), 1000);
+
 ```
 
 #### **Operator**

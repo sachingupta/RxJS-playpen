@@ -5,6 +5,7 @@ import {
   ObservableCreation,
   ObservableCreationFromEvent,
   ObservableCreationOf,
+  subjectExample,
 } from './creations';
 import { ThrottleExample, OperatorsExample } from './operators';
 import { stopWatch } from './examples/stopwatch/stopwatch';
@@ -27,6 +28,7 @@ function executer(id: number) {
       stopWatch();
       dragDrop();
       pigLating();
+      subjectExample();
     case 201:
       stopWatch();
     case 202:
