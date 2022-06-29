@@ -142,10 +142,8 @@ https://rxjs.dev/guide/subject
 
 - Observable is unicast while subject is multicast
   > - An Observable is unicast. An Observer and its Subscriber have a one-to-one relationship. Each subscribed Observer owns an independent execution of the Observable.
-
-> - a Subject allows values to be multicasted to many Observers. A Subject and its subscribers have a one-to-many relationship.
-
-> - A Subject can be an Observable as well as an Observer. They hold a registry of many listeners to multiple Observables.
+  > - a Subject allows values to be multicasted to many Observers. A Subject and its subscribers have a one-to-many relationship.
+  > - A Subject can be an Observable as well as an Observer. They hold a registry of many listeners to multiple Observables.
 
 ```Javascript
 
@@ -358,6 +356,23 @@ export function filterExample() {
 
 #### Scheduler
 
+### Difference between Observable and Subject
+
+https://betterprogramming.pub/when-to-use-rxjs-subject-behavioursubject-replaysubject-asyncsubject-or-void-subject-in-angular-c2e9db61b4a0
+
+#### Use a Observable when…
+
+- A regular Observable should be used when you only need one subscriber. Or you don't care that the subscriber that comes first will be finished first until the second will get its values.
+
+#### Use a Subject when…
+
+- When you need multiple subscribers and care that all the subscribers are getting their new values simultaneously, you need a Subject.
+
+- Use a BehaviourSubject when you need the last given value.
+- Use a ReplaySubject when you need more than the last given value (For example, the previous five values). Or you want to set a - time window for the values can be validly sent to subscribers.
+- Use an AsyncSubject when you only want the last value to be passed to the subscribers.
+- Use a Void Subject if you don't want to pass any value but just want to hook into the event.
+
 - A scheduler handles the execution of subscriptions.
 
 ### Pros and cons of RxJS
@@ -387,20 +402,3 @@ export function filterExample() {
 - **Data immutability**: Reactive programming works the best when combined with functional programming.
 
 - **tslib dependency**: The only dependency RxJS has is tslib. Details of internal implementation are not always restricted, meaning that you can see some improper usage of access modifiers.
-
-#### Difference between Observable and Subject
-
-https://betterprogramming.pub/when-to-use-rxjs-subject-behavioursubject-replaysubject-asyncsubject-or-void-subject-in-angular-c2e9db61b4a0
-
-#### Use a Observable when…
-
-- A regular Observable should be used when you only need one subscriber. Or you don't care that the subscriber that comes first will be finished first until the second will get its values.
-
-#### Use a Subject when…
-
-- When you need multiple subscribers and care that all the subscribers are getting their new values simultaneously, you need a Subject.
-
-- Use a BehaviourSubject when you need the last given value.
-- Use a ReplaySubject when you need more than the last given value (For example, the previous five values). Or you want to set a - time window for the values can be validly sent to subscribers.
-- Use an AsyncSubject when you only want the last value to be passed to the subscribers.
-- Use a Void Subject if you don't want to pass any value but just want to hook into the event.
