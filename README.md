@@ -60,6 +60,23 @@ clicks$.subscribe(e => {
 });
 ```
 
+```Javascript
+import { of } from 'rxjs';
+
+of(10, 20, 30)
+  .subscribe({
+    next: value => console.log('next:', value),
+    error: err => console.log('error:', err),
+    complete: () => console.log('the end'),
+  });
+
+// Outputs
+// next: 10
+// next: 20
+// next: 30
+// the end
+```
+
 - Subscribing to an Observable is like calling a function, providing callbacks where the data will be delivered to.
 
 #### **Observer**
@@ -199,6 +216,8 @@ mySubject$;
 
 #### **Operator**
 
+- https://rxjs.dev/guide/operators
+
 - An operator is a function that allows us to perform certain actions on events executed by observables.
 - You can import operators from 'rxjs/operators'. To use an operator, pass it into the .pipe method of an observable.
 - **interval(100)**, creates an observable that emits sequential numbers every specified interval (milliseconds by default) of time, starting from 0.
@@ -206,6 +225,10 @@ mySubject$;
 - The **of** constructor allows for the easy creation of an observable out of a known data source. It takes any number of arguments and returns an observable containing each argument as a separate event.
 - The **tap** operator is a unique case that doesn’t manipulate the stream’s values directly but allows a developer to tap into the stream and debug it.
 - **filter** allows a stream to be picky about what values are allowed.
+
+##### RxJS Marbles
+
+- https://rxmarbles.com/
 
 ```Javascript
 export function ThrottleExample() {

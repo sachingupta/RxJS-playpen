@@ -179,33 +179,14 @@ getFile();
 - and other consumers can subscribe to that stream in order to listen and retrieve the latest changes
 
 ```Javascript
-function callApiFooA(){
-    return fetch(urlA);
-}
-function callApiFooB(){
-    return fetch(urlB);
-}
-function callApiFooC([resAId, resBId]){
-    return Observable.from(fetch(url+'/'+resAId+'/'+resBId));
-}
-function callApiFooD(resC){
-    return Observable.from(fetch(url+'/'+resC.id));
-}
+import { ajax } from 'rxjs/ajax';
 
-const mergedObservable = Observable.from(Promise.all([callApiFooA(), callApiFooB()]))
+const githubUsers = `https://api.github.com/users?per_page=2`;
 
-const observer = mergedObservable.pipe(
-    map(([resA, resB]) => ([resA.id, resB.id])), // <- extract ids
-    switchMap((resIds) => callApiFooC(resIds)),
-    switchMap((resC) => callApiFooD(resC)),
-    tap((resD) => console.log(resD))
-).subscribe();
+const users = ajax(githubUsers);
+
+const subscribe = users.subscribe(
+  res => console.log(res)
+);
 
 ```
-
-- Observable.from will convert an array of Promises into Observable that is an array of results from callApiFooA and callApiFooB.
-- map — extracts ids from the response of API functions A and B
-- switchMap — make a call callApiFooC with the ids from the previous result, and return a new Observable with the result of function - callApiFooC
-- switchMap — make a call callApiFooD with the result of function callApiFooC
-- tap — get a result of previous execution and print it in console
-- subscribe — start listening to observable
