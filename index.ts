@@ -25,13 +25,17 @@ function executer(id: number) {
       OperatorsExample();
     case 200:
       stopWatch();
-    case 201:
       dragDrop();
+      pigLating();
+    case 201:
+      stopWatch();
     case 202:
+      dragDrop();
+    case 203:
       pigLating();
   }
 }
 
-executer(202);
+executer(200);
 
 // Open the console in the bottom right to see results.
