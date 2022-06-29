@@ -169,6 +169,7 @@ getFile();
 
 **Next Opportunity:**
 
+- Promise only ever yield a single value. That makes them useless for handling recurrent events such as mouse clicks or streams of data coming from the server, because we would have to create a promise for each separate event, instead of creating a promise that handles the stream of events as it comes.
 - What if may want to mutate the data steam that we pass from one promise call to another.
 - For example, we filter one promise response to only get the data with a specific type and then map the filtered data to only retrieve the ids.
 

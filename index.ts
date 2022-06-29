@@ -9,6 +9,7 @@ import {
 import { ThrottleExample, OperatorsExample } from './operators';
 import { stopWatch } from './examples/stopwatch/stopwatch';
 import { dragDrop } from './examples/dragdrop';
+import { pigLating } from './examples/pig-latin';
 
 function executer(id: number) {
   switch (id) {
@@ -26,9 +27,11 @@ function executer(id: number) {
       stopWatch();
     case 201:
       dragDrop();
+    case 202:
+      pigLating();
   }
 }
 
-executer(201);
+executer(202);
 
 // Open the console in the bottom right to see results.
